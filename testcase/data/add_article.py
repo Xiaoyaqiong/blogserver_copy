@@ -2,11 +2,11 @@ ADD_DATA={
             "test_add_art_001": {
             "req_data": {
                 "id": "-1",
-                "title": "haha234578",
+                "title": "haha23457899",
                 "mdContent": "haha234578",
                 "htmlContent": "<p>haha234578</p>\n",
                 "state": "1",
-                "cid":"91",
+                "cid":"56",
                 "dynamicTags": "",
             },
             "res_key": "status",

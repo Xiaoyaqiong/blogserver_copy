@@ -1,14 +1,16 @@
 import requests
 from common.logger import write_log
 class HttpReq(object):
+    contentType="application/x-www-form-urlencoded"
     def __init__(self):
         self.headers={
-            "Content-Type": "application/x-www-form-urlencoded",
-            "Cookie": "JSESSIONID=170B0D1923A96E115DEEE687245F511D",
+            "Content-Type": HttpReq.contentType,
+            "Cookie": "JSESSIONID=0C53795A1692D0F67A94012A1355827C",
             "User-Agent": "Mozilla / 5.0(Windows NT 10.0;Win64;x64;rv: 109.0) Gecko / 20100101Firefox / 114.0",
         }
     # get
     def get(self,url='',params='',cookies=None):
+
         response=requests.get(url=url,params=params,cookies=cookies,headers=self.headers)
         return response
 
