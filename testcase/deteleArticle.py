@@ -4,6 +4,7 @@ import requests
 from urllib import parse
 # from common.db_funcs import init_db_category,insert_category
 from common.HttpReq import VBReq
+from common.Login import VBLogin
 from common.wrapers import skip_related_case,write_case_log
 from config.ProjectConfig import VBConfig
 from ddt import ddt,data,unpack
@@ -14,6 +15,7 @@ from testcase.data.detele_article import DELETE_DATA
 @ddt
 class deteleArticle(unittest.TestCase):
     deteleurl=VBConfig.URL+'/article/dustbin'
+    managerurl=VBConfig.URL+'/admin/article/dustbin'
 
     @classmethod
     def setUp(self) :
@@ -47,42 +49,66 @@ class deteleArticle(unittest.TestCase):
     #     self.assertEqual(result[res_key], res_value)
 
     # 不传state
-    @data(DELETE_DATA['test_delete_article_005'])
-    @unpack
-    @write_case_log()
-    def test_delete_article_003(self, req_data, res_key, res_value):
-        print(req_data, res_key, res_value, '我是2')
-        result = VBReq.put(url=deteleArticle.deteleurl, data=req_data)
-        result = json.loads(result.text)
-        self.assertEqual(result[res_key], res_value)
+    # @data(DELETE_DATA['test_delete_article_005'])
+    # @unpack
+    # @write_case_log()
+    # def test_delete_article_003(self, req_data, res_key, res_value):
+    #     print(req_data, res_key, res_value, '我是2')
+    #     result = VBReq.put(url=deteleArticle.deteleurl, data=req_data)
+    #     result = json.loads(result.text)
+    #     self.assertEqual(result[res_key], res_value)
+    #
+    # # aid: 用户发表的文章编号, 其他参数正常
+    # # aid: 用户发表的多篇文章编号, 其他参数正常
+    # @data(DELETE_DATA['test_delete_article_006'],DELETE_DATA['test_delete_article_007'])
+    # @unpack
+    # @write_case_log()
+    # def test_delete_article_004(self, req_data, res_key, res_value):
+    #     print(req_data, res_key, res_value, '我是2')
+    #     result = VBReq.put(url=deteleArticle.deteleurl, data=req_data)
+    #     result = json.loads(result.text)
+    #     self.assertEqual(result[res_key], res_value)
+    #
+    # @data(DELETE_DATA['test_delete_article_008'], DELETE_DATA['test_delete_article_009'])
+    # @unpack
+    # @write_case_log()
+    # def test_delete_article_005(self, req_data, res_key, res_value):
+    #     print(req_data, res_key, res_value, '我是2')
+    #     result = VBReq.put(url=deteleArticle.deteleurl, data=req_data)
+    #     result = json.loads(result.text)
+    #     self.assertEqual(result[res_key], res_value)
 
-    # aid: 用户发表的文章编号, 其他参数正常
-    # aid: 用户发表的多篇文章编号, 其他参数正常
-    @data(DELETE_DATA['test_delete_article_006'],DELETE_DATA['test_delete_article_007'])
+    @data(DELETE_DATA['test_delete_article_010'], DELETE_DATA['test_delete_article_011'],DELETE_DATA['test_delete_article_012'])
     @unpack
     @write_case_log()
-    def test_delete_article_004(self, req_data, res_key, res_value):
-        print(req_data, res_key, res_value, '我是2')
-        result = VBReq.put(url=deteleArticle.deteleurl, data=req_data)
+    def test_delete_article_006(self, req_data, res_key, res_value):
+        cookie=VBLogin.managerUser()
+        print(req_data, res_key, res_value, '我是3')
+        result = VBReq.put(url=deteleArticle.managerurl, data=req_data,cookies=cookie)
         result = json.loads(result.text)
-        self.assertEqual(result[res_key], res_value)
+        # print('result',result)
+        self.assertEqual(res_value,result[res_key])
 
-    @data(DELETE_DATA['test_delete_article_008'], DELETE_DATA['test_delete_article_009'])
+    @data(DELETE_DATA['test_delete_article_013'])
     @unpack
     @write_case_log()
-    def test_delete_article_005(self, req_data, res_key, res_value):
-        print(req_data, res_key, res_value, '我是2')
-        result = VBReq.put(url=deteleArticle.deteleurl, data=req_data)
+    def test_delete_article_007(self, req_data, res_key, res_value):
+        cookie = VBLogin.managerUser()
+        print(req_data, res_key, res_value, '我是4')
+        result = VBReq.put(url=deteleArticle.managerurl, data=req_data,cookies=cookie)
         result = json.loads(result.text)
-        self.assertEqual(result[res_key], res_value)
+        # print('result', result)
+        self.assertEqual(res_value,result[res_key])
 
 
 if __name__ == '__main__':
     suite=unittest.TestSuite()
     # suite.addTest(deteleArticle("test_delete_article_001"))
     # suite.addTest(deteleArticle("test_delete_article_002"))
-    suite.addTest(deteleArticle("test_delete_article_003"))
-    suite.addTest(deteleArticle("test_delete_article_004"))
-    suite.addTest(deteleArticle("test_delete_article_005"))
+    # suite.addTest(deteleArticle("test_delete_article_003"))
+    # suite.addTest(deteleArticle("test_delete_article_004"))
+    # suite.addTest(deteleArticle("test_delete_article_005"))
+    suite.addTest(deteleArticle("test_delete_article_006"))
+    suite.addTest(deteleArticle("test_delete_article_007"))
     runner=unittest.TextTestRunner()
     test_result=runner.run(suite)

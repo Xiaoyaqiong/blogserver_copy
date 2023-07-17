@@ -71,4 +71,39 @@ DELETE_DATA={
         "res_value": 400
         },
 #     管理员特权
+#         管理员发表的文章
+        "test_delete_article_010": {
+        "req_data": {
+            "aid":"261",
+            "state": "1"
+        },
+        "res_key": "status",
+        "res_value": "success"
+        },
+        # 管理员发表的多篇文章
+        "test_delete_article_011": {
+        "req_data": {
+            "aid":[246,245],
+            "state": "1"
+        },
+        "res_key": "status",
+        "res_value": "success"
+        },
+        # 其他用户发表的文章
+        "test_delete_article_012": {
+        "req_data": {
+            "aid":"264",
+            "state": "1"
+        },
+        "res_key": "status",
+        "res_value": "success"
+        },
+        # 不传aid参数
+        "test_delete_article_013": {
+        "req_data": {
+            "state": "1"
+        },
+        "res_key": "status",
+        "res_value": "success"
+        },
 }
